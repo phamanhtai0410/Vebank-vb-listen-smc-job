@@ -37,7 +37,7 @@ module.exports = {
             json: true,
             setup: function(channel) {
                 return Promise.all([
-                    channel.assertExchange(Conf.Config.RABBIT.EXCHANGE, 'topic', {durable: false}),
+                    channel.assertExchange(Conf.Config.RABBIT.EXCHANGE, 'topic', {durable: true}),
                 ]);
             }
         });
