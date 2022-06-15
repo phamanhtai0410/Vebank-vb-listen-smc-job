@@ -61,7 +61,7 @@ build_stag:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "stag" ]; then
         sed -i -e "s#\[NAMESPACE\]#$NAMESPACE_STAG#g" skaffold.yaml
-        sed -i -e "s#\[CONTAINER_REPO\]#$BE_JOBS_CONTAINER_REPO_ASIA_STAG#g" skaffold.yaml
+        sed -i -e "s#\[CONTAINER_REPO\]#$CONTAINER_REPO_ASIA_STAG#g" skaffold.yaml
         sed -i -e "s#\[APP_NAME\]#$IMAGE_NAME#g" skaffold.yaml
         sed -i -e "s#\[CI_COMMIT_REF_NAME\]#$CI_COMMIT_REF_NAME#g" skaffold.yaml
         cat skaffold.yaml
