@@ -7,7 +7,8 @@
     "supply": "node src/events/supply.js",
     "borrow": "node src/events/borrow.js",
     "repay": "node src/events/repay.js",
-    "withdraw": "node src/events/withdraw.js"
+    "withdraw": "node src/events/withdraw.js",
+    "job-lending": "node src/jobs/cron.lending.js"
   },
   "author": "anhvt",
   "license": "ISC",
