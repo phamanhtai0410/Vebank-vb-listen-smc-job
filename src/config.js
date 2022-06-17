@@ -35,8 +35,14 @@ let Config = {
         QUEUE_WITHDRAW: {
             EXCHANGE: process.env.RABBIT_EXCHANGE,
             KEY: process.env.RABBIT_ROUTING_KEY_WITHDRAW
-        }
-    }
+        },
+        QUEUE_UPDATE_RESERVE: {
+            EXCHANGE: process.env.RABBIT_EXCHANGE,
+            KEY: process.env.RABBIT_ROUTING_KEY_UPDATE_RESERVE
+        },
+    },
+    FILTER_FROM_BLOCK: process.env.FILTER_FROM_BLOCK,
+    FILTER_TO_BLOCK: process.env.FILTER_TO_BLOCK,
 };
 
 module.exports.Config = Config;
