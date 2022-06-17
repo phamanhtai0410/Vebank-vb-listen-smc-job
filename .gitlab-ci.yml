@@ -6,6 +6,7 @@ variables:
   APP_NAME_REPAY: repay
   APP_NAME_JOB_LENDING: job-lending
   APP_NAME_WITHDRAW: withdraw
+  APP_NAME_RSV_UDT: rsv-udt
   CONTAINER_REPO_ASIA_STAG: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-staging-ecr/listen-smc-job
   CONTAINER_REPO_ASIA_PROD: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-production-ecr/listen-smc-job
   NAMESPACE_STAG: vb-jobs-stag
@@ -175,6 +176,32 @@ deploy_supply_stag:
   only:
     refs:
       - stag
+
+deploy_rsv_udt_stag:
+  stage: deploy
+  image:  alpine/helm:3.2.1
+  tags:
+  - rinz-stag
+  script:
+    - *predeploy
+    - *kubectl_config
+    - |
+      if [ "$CI_COMMIT_REF_NAME" == "stag" ]; then
+        sed -i -e "s#\[NAMESPACE\]#$NAMESPACE_STAG#g" skaffold.yaml
+        sed -i -e "s#\[APP_NAME\]#$APP_NAME_RSV_UDT#g" skaffold.yaml
+        sed -i -e "s#\[CONTAINER_REPO\]#$CONTAINER_REPO_ASIA_STAG#g" skaffold.yaml
+        sed -i -e "s#\[CI_COMMIT_REF_NAME\]#$CI_COMMIT_REF_NAME#g" skaffold.yaml
+      fi
+    - git clone https://read-token:$GITLAB_TOKEN@gitlab.rinznetwork.com/rinz-io-devops/helm-value/$IMAGE_NAME.git
+    - mv $IMAGE_NAME/${APP_NAME_RSV_UDT}-stag.yaml .
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+    - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v1.38.0/skaffold-linux-amd64 && chmod +x skaffold &&  mv skaffold /usr/local/bin
+    - /usr/local/bin/skaffold deploy -p profile-${APP_NAME_RSV_UDT}-stag   -a build_sync.json
+
+  only:
+    refs:
+      - stag
+      
 deploy_job_lending_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
