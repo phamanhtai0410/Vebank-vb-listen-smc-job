@@ -13,5 +13,6 @@
     npm run borrow       (event borrow)
     npm run repay        (event repay)
     npm run withdraw     (event withdraw)
+    npm run reserve-update
     npm run job-lending  (cron jobs lending actions)
 ```
