@@ -15,4 +15,6 @@
     npm run withdraw     (event withdraw)
     npm run reserve-update (event reserve update)
     npm run job-lending  (cron jobs lending actions)
+    npm run pair-created (event PairCreated)
+    npm run job-pool  (cron jobs Pool actions)
 ```

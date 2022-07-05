@@ -4,6 +4,7 @@ require('dotenv').config();
 let Config = {
     POOL_CONTRACT: process.env.POOL_CONTRACT,
     ABI_POOL_CONTRACT: process.env.ABI_POOL_CONTRACT,
+    VB_V2_FACTORY_CONTRACT: process.env.VB_V2_FACTORY_CONTRACT,
     RPC_VECHAIN: process.env.RPC_VECHAIN,
     REDIS_CLUSTER: process.env.RPC_VECHAIN,
     MONGO_URI: process.env.MONGO_URI,
@@ -20,6 +21,7 @@ let Config = {
         LOCALE: process.env.RABBIT_LOCALE,
         FRAME_MAX: process.env.RABBIT_FRAME_MAX,
         EXCHANGE: process.env.RABBIT_EXCHANGE,
+
         QUEUE_SUPPLY: {
             EXCHANGE: process.env.RABBIT_EXCHANGE,
             KEY: process.env.RABBIT_ROUTING_KEY_SUPPLY
@@ -39,6 +41,10 @@ let Config = {
         QUEUE_UPDATE_RESERVE: {
             EXCHANGE: process.env.RABBIT_EXCHANGE,
             KEY: process.env.RABBIT_ROUTING_KEY_UPDATE_RESERVE
+        },
+        QUEUE_PAIR_CREATED: {
+            EXCHANGE: process.env.RABBIT_EXCHANGE_POOL,
+            KEY: process.env.RABBIT_ROUTING_KEY_PAIR_CREATED
         },
     },
     FILTER_FROM_BLOCK: process.env.FILTER_FROM_BLOCK,
