@@ -3,7 +3,7 @@ ABI_POOL_CONTRACT=
 RPC_VECHAIN=https://vethor-node-test.vechaindev.com
 
 // Config RABBITMQ
-RABBIT_URI=amqp://vb:4743vyjhjSCcuKq8@13.212.45.166:5672/vb
+RABBIT_URI=amqps://vb:4743vyjhjSCcuKq8@b-7f02eefd-22f0-481b-9f6b-cc8acb6a84c3.mq.ap-southeast-1.amazonaws.com:5671/vb
 RABBIT_EXCHANGE=lending-actions
 
 RABBIT_ROUTING_KEY_SUPPLY=lending.supply
