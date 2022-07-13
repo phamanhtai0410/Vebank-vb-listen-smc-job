@@ -5,6 +5,8 @@ const thorify = require("thorify").thorify;
 const Web3 = require("web3");
 const Conf = require('../config');
 const publisherHelper = require('../publisherHelper');
+var Sentry = require('@sentry/node');
+
 
 let eventSupply = async function (instanceContract) {
     instanceContract.getPastEvents('Supply',  {fromBlock: Conf.Config.FILTER_FROM_BLOCK, toBlock: Conf.Config.FILTER_TO_BLOCK}).then(logs =>{
@@ -76,9 +78,19 @@ async function listenEvent() {
         await eventWithdraw(tokenContract);
         await eventReserveDataUpdated(tokenContract);
     } catch (err) {
-        console.error(`[job.cron.lending] ERROR: ${err}`)
-        throw err
+        console.error(`[job.cron.lending] ERROR: ${err}`);
+        await Sentry.captureException(err);
+        throw err;
     }
 }
 
-listenEvent();
+async function cron_lending() {
+    Sentry.init({
+        dsn: Conf.Config.SENTRY_DSN,
+        tracesSampleRate: 1.0,
+        debug: true
+      });
+    await listenEvent();
+}
+
+cron_lending();
