@@ -16,6 +16,7 @@
   "author": "anhvt",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "6.0",
     "amqp-connection-manager": "^4.1.3",
     "concurrently": "^7.2.1",
     "dotenv": "^16.0.1",

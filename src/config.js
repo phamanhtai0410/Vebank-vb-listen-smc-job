@@ -49,6 +49,7 @@ let Config = {
     },
     FILTER_FROM_BLOCK: process.env.FILTER_FROM_BLOCK,
     FILTER_TO_BLOCK: process.env.FILTER_TO_BLOCK,
+    SENTRY_DSN: process.env.SENTRY_DSN,
 };
 
 module.exports.Config = Config;

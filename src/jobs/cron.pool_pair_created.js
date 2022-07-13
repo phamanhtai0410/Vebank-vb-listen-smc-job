@@ -32,9 +32,19 @@ async function listenEvent() {
         let tokenContract =  new web3server.eth.Contract(loadABI, Conf.Config.VB_V2_FACTORY_CONTRACT);
         await eventPairCreated(tokenContract);
     } catch (err) {
-        console.error(`[job.cron.pool_pair_created] ERROR: ${err}`)
+        console.error(`[job.cron.pool_pair_created] ERROR: ${err}`);
+        await Sentry.captureException(err);
         throw err
     }
 }
 
-listenEvent();
+async function pool_pair_created() {
+    Sentry.init({
+        dsn: Conf.Config.SENTRY_DSN,
+        tracesSampleRate: 1.0,
+        debug: true
+      });
+    await listenEvent();
+}
+
+pool_pair_created();
