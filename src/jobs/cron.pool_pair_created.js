@@ -5,6 +5,7 @@ const thorify = require("thorify").thorify;
 const Web3 = require("web3");
 const Conf = require('../config');
 const publisherHelper = require('../publisherHelper');
+var Sentry = require('@sentry/node');
 
 let eventPairCreated = async function (instanceContract) {
     console.log("Conf.Config.FILTER_FROM_BLOCK ", Conf.Config.FILTER_FROM_BLOCK)
