@@ -1,15 +1,21 @@
-
 const fs = require('fs');
 const path = require("path");
 const thorify = require("thorify").thorify;
 const Web3 = require("web3");
 const Conf = require('../config');
 const publisherHelper = require('../publisherHelper');
-var Sentry = require('@sentry/node');
+const calculateFilterBlocks = require("../helpers/calculateFilterBlocks");
+const Sentry = require('@sentry/node');
 
 let eventPairCreated = async function (instanceContract) {
-    console.log("Conf.Config.FILTER_FROM_BLOCK ", Conf.Config.FILTER_FROM_BLOCK)
-    instanceContract.getPastEvents('PairCreated',  {fromBlock: Conf.Config.FILTER_FROM_BLOCK, toBlock: Conf.Config.FILTER_TO_BLOCK}).then(logs =>{
+    const { fromBlock, toBlock } = calculateFilterBlocks();
+
+    instanceContract.getPastEvents(
+        'PairCreated',
+        {
+            fromBlock: fromBlock,
+            toBlock: toBlock
+        }).then(logs =>{
         if (logs.length > 0) {
             for (let index = 0; index < logs.length; index++) {
                 publisherHelper.sendMessage(Conf.Config.RABBIT.QUEUE_PAIR_CREATED, logs[index])

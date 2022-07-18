@@ -49,7 +49,8 @@ let Config = {
     },
     FILTER_FROM_BLOCK: process.env.FILTER_FROM_BLOCK,
     FILTER_TO_BLOCK: process.env.FILTER_TO_BLOCK,
-    SENTRY_DSN: process.env.SENTRY_DSN,
+    INIT_BLOCK: process.env.INIT_BLOCK,
+    INIT_TIMESTAMP: process.env.INIT_TIMESTAMP,
 };
 
 module.exports.Config = Config;
