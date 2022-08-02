@@ -1,14 +1,14 @@
 variables:
   REGION: asia-southeast1
   IMAGE_NAME: vb-listen-smc-job
-  APP_NAME_SUPPLY: supply
-  APP_NAME_BORROW: borrow
-  APP_NAME_REPAY: repay
-  APP_NAME_JOB_LENDING: job-lending
-  APP_NAME_WITHDRAW: withdraw
-  APP_NAME_RSV_UDT: rsv-udt
-  APP_NAME_PAIR_CRT: pair-crt
-  APP_NAME_JOB_POOL: job-pool
+  APP_NAME_SUPPLY: vb-listen-smc-supply
+  APP_NAME_BORROW: vb-listen-smc-borrow
+  APP_NAME_REPAY: vb-listen-smc-repay
+  APP_NAME_JOB_LENDING: vb-listen-smc-job-lending
+  APP_NAME_WITHDRAW: vb-listen-smc-withdraw
+  APP_NAME_RSV_UDT: vb-listen-smc-rsv-udt
+  APP_NAME_PAIR_CRT: vb-listen-smc-pair-crt
+  APP_NAME_JOB_POOL: vb-listen-smc-job-pool
   CONTAINER_REPO_ASIA_STAG: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-staging-ecr/listen-smc-job
   CONTAINER_REPO_ASIA_PROD: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-production-ecr/listen-smc-job
   NAMESPACE_STAG: vb-jobs-stag
