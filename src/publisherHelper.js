@@ -52,7 +52,7 @@ module.exports = {
             try {
                 // await publisherHelper.sleep(10000);
                 await channelWrapper.publish(queue.EXCHANGE, queue.KEY, data, { contentType: 'application/json', persistent: true })
-                console.log("SENT::\n", JSON.stringify(data));
+                console.log(`SENT:: ${JSON.stringify(data)}`);
                 resolve(null);
             } catch (error) {
                 console.error(`publisherHelper.sendMessage] Message was rejected with error: ${error}`);

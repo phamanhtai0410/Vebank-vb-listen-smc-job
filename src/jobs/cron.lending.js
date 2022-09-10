@@ -49,7 +49,7 @@ let eventWithdraw = async function (instanceContract) {
     })
 }
 
-let eventReserveDataUpdated= async function (instanceContract) {
+let eventReserveDataUpdated = async function (instanceContract) {
     instanceContract.getPastEvents('ReserveDataUpdated',  {fromBlock: Conf.Config.FILTER_FROM_BLOCK, toBlock: Conf.Config.FILTER_TO_BLOCK}).then(logs =>{
         if (logs.length > 0) {
             for (let index = 0; index < logs.length; index++) {
