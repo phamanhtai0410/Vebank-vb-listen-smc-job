@@ -17,6 +17,7 @@ variables:
   FULLREPO_ASIA_PROD: $CONTAINER_REPO_ASIA_PROD:$CI_COMMIT_SHORT_SHA
   HELM_VALUE: ${CI_COMMIT_REF_NAME}
   HELM_VERSION: 2.4.6
+  HELM_CRONJOB_VERSION: 0.1.7
   AWS_REGION: ap-southeast-1
   GITLAB_TOKEN: $GITLAB_RUNNER_TOKEN
   DOCKER_DRIVER: overlay
@@ -43,7 +44,10 @@ stages:
   pip3 install --no-cache-dir awscli
   helm plugin install https://github.com/hypnoglow/helm-s3.git --version 0.12.0
   helm repo add helm-template s3://rinz-helm-template
+  helm repo add helm-template-cronjob s3://rinz-helm-template/cronjob
   helm pull s3://rinz-helm-template/helm-template-$HELM_VERSION.tgz --untar=true
+  helm pull s3://rinz-helm-template/cronjob/helm-template-cronjob-$HELM_CRONJOB_VERSION.tgz --untar=true
+
 build_stag:
   image: docker:19.03.1
   tags:
@@ -223,7 +227,7 @@ deploy_job_lending_stag:
     - mv $IMAGE_NAME/${APP_NAME_JOB_LENDING}-stag.yaml .
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v1.38.0/skaffold-linux-amd64 && chmod +x skaffold &&  mv skaffold /usr/local/bin
-    - /usr/local/bin/skaffold deploy -p profile-${APP_NAME_JOB_LENDING}-stag   -a build_sync.json
+    - /usr/local/bin/skaffold deploy -p profile-${APP_NAME_JOB_LENDING}-cronjob-stag   -a build_sync.json
 
   only:
     refs:
@@ -249,7 +253,7 @@ deploy_job_pool_stag:
     - mv $IMAGE_NAME/${APP_NAME_PAIR_CRT}-stag.yaml .
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v1.38.0/skaffold-linux-amd64 && chmod +x skaffold &&  mv skaffold /usr/local/bin
-    - /usr/local/bin/skaffold deploy -p profile-${APP_NAME_PAIR_CRT}-stag   -a build_sync.json
+    - /usr/local/bin/skaffold deploy -p profile-${APP_NAME_PAIR_CRT}-cronjob-stag   -a build_sync.json
 
   only:
     refs:
