@@ -10,8 +10,6 @@
     "withdraw": "node src/events/withdraw.js",
     "reserve-update": "node src/events/reserveUpdate.js",
     "job-lending": "node src/jobs/cron.lending.js",
-    "pair-created": "node src/events/pair_created.js",
-    "job-pool": "node src/jobs/cron.pool_pair_created"
   },
   "author": "anhvt",
   "license": "ISC",
