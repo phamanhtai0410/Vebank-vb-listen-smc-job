@@ -1,6 +1,15 @@
 apiVersion: skaffold/v2beta28 
 kind: Config	
 profiles:
+  - name: profile-dev
+    build:
+      tagPolicy:
+        gitCommit: {}
+      artifacts:
+      - image: [CONTAINER_REPO]
+        context: .
+        docker:
+          dockerfile: Dockerfile
   - name: profile-stag
     build:
       tagPolicy:
@@ -35,11 +44,10 @@ profiles:
               - ./[APP_NAME]-stag.yaml
               artifactOverrides:
                 image.repository: [CONTAINER_REPO]
-             
           flags:
             upgrade:
               - --install
-- name: profile-[APP_NAME]-cronjob-stag
+  - name: profile-[APP_NAME]-cronjob-stag
     build:
       tagPolicy:
         gitCommit: {}
@@ -62,6 +70,118 @@ profiles:
               # Path to the values file
               valuesFiles:
               - ./[APP_NAME]-stag.yaml
+              artifactOverrides:
+                image.repository: [CONTAINER_REPO]
+          flags:
+            upgrade:
+              - --install
+  - name: profile-[APP_NAME]-dev
+    build:
+      tagPolicy:
+        gitCommit: {}
+      artifacts:
+      - image: [CONTAINER_REPO]
+        context: .
+        docker:
+          dockerfile: Dockerfile
+    deploy:
+        # Using Helm as the deployment strategy
+        statusCheckDeadlineSeconds: 300
+        helm:
+          # Pass the parameters according to  
+          releases:
+            - name: [APP_NAME]
+              chartPath: ./helm-template
+              namespace: [NAMESPACE]
+              # Location of the chart - here, we use a local chart
+              wait: true
+              # Path to the values file
+              valuesFiles:
+              - ./[APP_NAME]-dev.yaml
+              artifactOverrides:
+                image.repository: [CONTAINER_REPO]
+          flags:
+            upgrade:
+              - --install
+  - name: profile-[APP_NAME]-cronjob-dev
+    build:
+      tagPolicy:
+        gitCommit: {}
+      artifacts:
+      - image: [CONTAINER_REPO]
+        context: .
+        docker:
+          dockerfile: Dockerfile
+    deploy:
+        # Using Helm as the deployment strategy
+        statusCheckDeadlineSeconds: 300
+        helm:
+          # Pass the parameters according to  
+          releases:
+            - name: [APP_NAME]
+              chartPath: ./helm-template-cronjob
+              namespace: [NAMESPACE]
+              # Location of the chart - here, we use a local chart
+              wait: true
+              # Path to the values file
+              valuesFiles:
+              - ./[APP_NAME]-dev.yaml
+              artifactOverrides:
+                image.repository: [CONTAINER_REPO]
+          flags:
+            upgrade:
+              - --install
+  - name: profile-[APP_NAME]-test
+    build:
+      tagPolicy:
+        gitCommit: {}
+      artifacts:
+      - image: [CONTAINER_REPO]
+        context: .
+        docker:
+          dockerfile: Dockerfile
+    deploy:
+        # Using Helm as the deployment strategy
+        statusCheckDeadlineSeconds: 300
+        helm:
+          # Pass the parameters according to  
+          releases:
+            - name: [APP_NAME]
+              chartPath: ./helm-template
+              namespace: [NAMESPACE]
+              # Location of the chart - here, we use a local chart
+              wait: true
+              # Path to the values file
+              valuesFiles:
+              - ./[APP_NAME]-test.yaml
+              artifactOverrides:
+                image.repository: [CONTAINER_REPO]
+          flags:
+            upgrade:
+              - --install
+  - name: profile-[APP_NAME]-cronjob-test
+    build:
+      tagPolicy:
+        gitCommit: {}
+      artifacts:
+      - image: [CONTAINER_REPO]
+        context: .
+        docker:
+          dockerfile: Dockerfile
+    deploy:
+        # Using Helm as the deployment strategy
+        statusCheckDeadlineSeconds: 300
+        helm:
+          # Pass the parameters according to  
+          releases:
+            - name: [APP_NAME]
+              chartPath: ./helm-template-cronjob
+              namespace: [NAMESPACE]
+              # Location of the chart - here, we use a local chart
+              wait: true
+              # Path to the values file
+              valuesFiles:
+              - ./[APP_NAME]-test.yaml
               artifactOverrides:
                 image.repository: [CONTAINER_REPO]
           flags:
@@ -105,32 +225,5 @@ profiles:
           flags:
             upgrade:
               - --install
-  - name: profile-[APP_NAME]-cronjob-prod
-    build:
-      tagPolicy:
-        gitCommit: {}
-      artifacts:
-      - image: [CONTAINER_REPO]
-        context: .
-        docker:
-          dockerfile: Dockerfile
-    deploy:
-        # Using Helm as the deployment strategy
-        statusCheckDeadlineSeconds: 300
-        helm:
-          # Pass the parameters according to  
-          releases:
-            - name: [APP_NAME]
-              chartPath: ./helm-template-cronjob
-              namespace: [NAMESPACE]
-              # Location of the chart - here, we use a local chart
-              wait: true
-              # Path to the values file
-              valuesFiles:
-              - ./[APP_NAME]-prod.yaml
-              artifactOverrides:
-                image.repository: [CONTAINER_REPO]
-          flags:
-            upgrade:
-              - --install
   
+
