@@ -1,4 +1,6 @@
 const amqp = require('amqp-connection-manager');
+const Redis = require("ioredis");
+
 const Conf = require('./config');
 
 module.exports = {
@@ -68,5 +70,10 @@ module.exports = {
         return new Promise((resolve) => {
             setTimeout(resolve, ms);
         });
-    }   
+    } ,
+
+    initRedis: () => {
+        const connectRedis = new Redis(Conf.Config.REDIS_DSN);
+        return connectRedis;
+    }
 }

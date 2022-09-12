@@ -6,7 +6,7 @@ let Config = {
     ABI_POOL_CONTRACT: process.env.ABI_POOL_CONTRACT,
     VB_V2_FACTORY_CONTRACT: process.env.VB_V2_FACTORY_CONTRACT,
     RPC_VECHAIN: process.env.RPC_VECHAIN,
-    REDIS_CLUSTER: process.env.RPC_VECHAIN,
+    REDIS_DSN: process.env.REDIS_DSN,
     MONGO_URI: process.env.MONGO_URI,
     DBNAME: process.env.DBNAME,
     CELERY_BROKER_URL: process.env.CELERY_BROKER_URL,
