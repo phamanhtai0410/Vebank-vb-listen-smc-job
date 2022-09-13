@@ -227,7 +227,7 @@ deploy_job_lending_stag:
     - mv $IMAGE_NAME/${APP_NAME_JOB_LENDING}-stag.yaml .
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v1.38.0/skaffold-linux-amd64 && chmod +x skaffold &&  mv skaffold /usr/local/bin
-   - helm uninstall -n $NAMESPACE_STAG $APP_NAME_JOB_LENDING
+    - helm uninstall -n $NAMESPACE_STAG $APP_NAME_JOB_LENDING
     - /usr/local/bin/skaffold deploy -p profile-${APP_NAME_JOB_LENDING}-cronjob-stag   -a build_sync.json
 
   only:
