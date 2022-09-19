@@ -4,7 +4,9 @@ profiles:
   - name: profile-dev
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -13,16 +15,19 @@ profiles:
   - name: profile-stag
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
         docker:
           dockerfile: Dockerfile
   - name: profile-[APP_NAME]-stag
-    build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -50,7 +55,9 @@ profiles:
   - name: profile-[APP_NAME]-cronjob-stag
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -78,7 +85,9 @@ profiles:
   - name: profile-[APP_NAME]-dev
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -106,7 +115,9 @@ profiles:
   - name: profile-[APP_NAME]-cronjob-dev
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -134,7 +145,9 @@ profiles:
   - name: profile-[APP_NAME]-test
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -162,7 +175,9 @@ profiles:
   - name: profile-[APP_NAME]-cronjob-test
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -190,7 +205,9 @@ profiles:
   - name: profile-prod
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
@@ -199,7 +216,9 @@ profiles:
   - name: profile-[APP_NAME]-prod
     build:
       tagPolicy:
-        gitCommit: {}
+        gitCommit:
+          variant: CommitSha
+          ignoreChanges: true
       artifacts:
       - image: [CONTAINER_REPO]
         context: .
