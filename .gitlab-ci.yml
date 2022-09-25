@@ -9,14 +9,14 @@ variables:
   APP_NAME_RSV_UDT: vb-listen-smc-rsv-udt
   # APP_NAME_PAIR_CRT: vb-listen-smc-pair-crt
  # APP_NAME_JOB_POOL: vb-listen-smc-job-pool
-  CONTAINER_REPO_ASIA_STAG: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-staging-ecr/listen-smc-job
-  CONTAINER_REPO_ASIA_PROD: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-production-ecr/listen-smc-job
+  CONTAINER_REPO_ASIA_STAG: 968557029040.dkr.ecr.ap-southeast-1.amazonaws.com/vb-staging-ecr/listen-smc-job
+  CONTAINER_REPO_ASIA_PROD: 968557029040.dkr.ecr.ap-southeast-1.amazonaws.com/vb-production-ecr/listen-smc-job
   NAMESPACE_STAG: vb-jobs-stag
   NAMESPACE_PROD: vb-jobs
   FULLREPO_ASIA_STAG: $CONTAINER_REPO_ASIA_STAG:$CI_COMMIT_SHA
   FULLREPO_ASIA_PROD: $CONTAINER_REPO_ASIA_PROD:$CI_COMMIT_SHA
   HELM_VALUE: ${CI_COMMIT_REF_NAME}
-  HELM_VERSION: 2.4.6
+  HELM_VERSION: 3.0.0
   HELM_CRONJOB_VERSION: 0.1.9
   AWS_REGION: ap-southeast-1
   GITLAB_TOKEN: $GITLAB_RUNNER_TOKEN
@@ -32,26 +32,26 @@ stages:
 .kubectl_config: &kubectl_config
   - |
       if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
-        aws eks --region $AWS_REGION update-kubeconfig --name rinz-production-cluster
+        aws eks --region $AWS_REGION update-kubeconfig --name esol-production-cluster
       fi
   - |
       if [ "$CI_COMMIT_REF_NAME" == "stag" ]; then
-        aws eks --region $AWS_REGION update-kubeconfig --name rinz-staging-cluster
+        aws eks --region $AWS_REGION update-kubeconfig --name esol-staging-cluster
       fi
 .predeploy: &predeploy |
   apk add --no-cache  bash git  python3 py3-pip curl
   pip3 install --upgrade pip 
   pip3 install --no-cache-dir awscli
   helm plugin install https://github.com/hypnoglow/helm-s3.git --version 0.12.0
-  helm repo add helm-template s3://rinz-helm-template
-  helm repo add helm-template-cronjob s3://rinz-helm-template/cronjob
-  helm pull s3://rinz-helm-template/helm-template-$HELM_VERSION.tgz --untar=true
-  helm pull s3://rinz-helm-template/cronjob/helm-template-cronjob-$HELM_CRONJOB_VERSION.tgz --untar=true
+  helm repo add helm-template s3://esol-helm-template
+  helm repo add helm-template-cronjob s3://esol-helm-template/cronjob
+  helm pull s3://esol-helm-template/helm-template-$HELM_VERSION.tgz --untar=true
+  helm pull s3://esol-helm-template/cronjob/helm-template-cronjob-$HELM_CRONJOB_VERSION.tgz --untar=true
 
 build_stag:
   image: docker:19.03.1
   tags:
-  - rinz-stag
+  - esol-stag
   stage: build
   services:
   - docker:19.03.1-dind
@@ -86,7 +86,7 @@ deploy_borrow_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
   tags:
-  - rinz-stag
+  - esol-stag
   script:
     - *predeploy
     - *kubectl_config
@@ -111,7 +111,7 @@ deploy_repay_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
   tags:
-  - rinz-stag
+  - esol-stag
   script:
     - *predeploy
     - *kubectl_config
@@ -136,7 +136,7 @@ deploy_withdraw_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
   tags:
-  - rinz-stag
+  - esol-stag
   script:
     - *predeploy
     - *kubectl_config
@@ -162,7 +162,7 @@ deploy_supply_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
   tags:
-  - rinz-stag
+  - esol-stag
   script:
     - *predeploy
     - *kubectl_config
@@ -187,7 +187,7 @@ deploy_rsv_udt_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
   tags:
-  - rinz-stag
+  - esol-stag
   script:
     - *predeploy
     - *kubectl_config
@@ -212,7 +212,7 @@ deploy_job_lending_stag:
   stage: deploy
   image:  alpine/helm:3.2.1
   tags:
-  - rinz-stag
+  - esol-stag
   script:
     - *predeploy
     - *kubectl_config
@@ -239,7 +239,7 @@ deploy_job_lending_stag:
 #   stage: deploy
 #   image:  alpine/helm:3.2.1
 #   tags:
-#   - rinz-stag
+#   - esol-stag
 #   script:
 #     - *predeploy
 #     - *kubectl_config
@@ -265,7 +265,7 @@ deploy_job_lending_stag:
 #   stage: deploy
 #   image:  alpine/helm:3.2.1
 #   tags:
-#   - rinz-stag
+#   - esol-stag
 #   script:
 #     - *predeploy
 #     - *kubectl_config
